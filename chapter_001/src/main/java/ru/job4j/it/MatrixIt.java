@@ -14,6 +14,7 @@ public class MatrixIt implements Iterator<Integer> {
 
     @Override
     public boolean hasNext() {
+        int falseColumn = 0;
         boolean rsl;
         int sum = 0;
         for (int[] datum : data) {
@@ -24,8 +25,9 @@ public class MatrixIt implements Iterator<Integer> {
         } else  {
             while (data[column].length == 0) {
                 column++;
+                falseColumn++;
             }
-            rsl = (row + 1) * (column + 1) <= sum + 1;
+            rsl = (row + 1) * (column - falseColumn + 1) <= sum + 1;
         }
         return rsl;
     }
