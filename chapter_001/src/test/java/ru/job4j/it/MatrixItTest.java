@@ -54,8 +54,6 @@ public class MatrixItTest {
         MatrixIt it = new MatrixIt(in);
         assertThat(it.next(), is(1));
         assertThat(it.next(), is(2));
-        //column = 4; row = 0; sum = 2 (row + 1) * (column + 1) <= sum + 1
-        // (1) * (4 + 1) <= 2 + 1 - false, должно быть true
     }
 
     @Test
