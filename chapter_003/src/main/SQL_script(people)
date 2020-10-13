@@ -1,0 +1,12 @@
+create table people(
+    id serial primary key,
+    name varchar(255),
+    adress text,
+    age int
+);
+insert into people(name, adress, age) values ('Andre', 'Bryansk', '100');
+select * from people;
+update people set age = 40;
+select * from people;
+delete from people;
+select * from people;
