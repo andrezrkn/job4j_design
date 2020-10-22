@@ -16,7 +16,7 @@ create table role_rules_connection(
 create table user(
     id serial primary key,
     name varchar(255),
-    role_rules_connection_id int references role_rules_connection(id)
+    role_id int references role(id)
 
 );
 create table item(
