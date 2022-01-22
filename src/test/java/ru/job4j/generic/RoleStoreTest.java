@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 public class RoleStoreTest {
 
     @Test
-    public void TestOne() {
+    public void testOne() {
         RoleStore store = new RoleStore();
         store.add(new Role("1", "Admin №1"));
         Role result = store.findById("1");
@@ -17,7 +17,7 @@ public class RoleStoreTest {
     }
 
     @Test
-    public void TestTwo() {
+    public void testTwo() {
         RoleStore store = new RoleStore();
         store.add(new Role("1", "Admin №1"));
         store.add(new Role("2", "Admin №2"));
