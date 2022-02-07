@@ -51,7 +51,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public V get(K key) {
         int hash = hash(key.hashCode());
-        return count == 0 ? null : (table[hash].key == key
+        return count == 0 ? null : (table[hash].key.equals(key)
                 ? table[hash].value : null);
     }
 
@@ -59,7 +59,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     public boolean remove(K key) {
         boolean rsl = false;
         int hash = hash(key.hashCode());
-        if (table[hash] != null && table[hash].key == key) {
+        if (table[hash] != null && table[hash].key.equals(key)) {
             table[hash] = null;
             count--;
             modCount++;
