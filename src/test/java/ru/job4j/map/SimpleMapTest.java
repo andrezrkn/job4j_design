@@ -49,10 +49,10 @@ public class SimpleMapTest {
     }
 
     @Test
-    public void whenPutAndHasNextFalseThenIterator() {
+    public void whenPutAndHasNextTrueThenIterator() {
         SimpleMap<Integer, Integer> map = new SimpleMap<>();
         map.put(1, 1);
-        assertFalse(map.iterator().hasNext());
+        assertTrue(map.iterator().hasNext());
     }
 
     @Test
@@ -77,6 +77,6 @@ public class SimpleMapTest {
         map.put(1, 1);
         map.put(2, 2);
         Iterator<Integer> iterator = map.iterator();
-        assertThat(iterator.next(), is(2));
+        assertThat(iterator.next(), is(1));
     }
 }

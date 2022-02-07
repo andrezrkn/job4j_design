@@ -50,20 +50,16 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public V get(K key) {
-        V rsl;
-        if (count == 0) {
-            rsl = null;
-        } else {
-            rsl = table[hash(key.hashCode())].value;
-        }
-        return rsl;
+        int hash = hash(key.hashCode());
+        return count == 0 ? null : (table[hash].key == key
+                ? table[hash].value : null);
     }
 
     @Override
     public boolean remove(K key) {
         boolean rsl = false;
         int hash = hash(key.hashCode());
-        if (table[hash] != null) {
+        if (table[hash] != null && table[hash].key == key) {
             table[hash] = null;
             count--;
             modCount++;
@@ -78,34 +74,20 @@ public class SimpleMap<K, V> implements Map<K, V> {
             private int point = 0;
             private int expectedModCount = modCount;
 
-            private int searchPoint() {
-                int rsl = -1;
-                if (point == 0) {
-                    for (int i = 0; i < capacity; i++) {
-                        if (table[i] != null) {
-                            point = i;
-                            break;
-                        }
-                    }
-                }
-                if (point < count) {
-                    for (int i = point + 1; i < capacity; i++) {
-                        if (table[i] != null) {
-                            rsl = i;
-                            break;
-                        }
-                    }
-                }
-                return rsl;
-            }
-
             @Override
             public boolean hasNext() {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-
-                return searchPoint() != -1;
+                boolean rsl = false;
+                while (point < capacity) {
+                    if (table[point] != null) {
+                        rsl = true;
+                        break;
+                    }
+                    point++;
+                }
+                return rsl;
             }
 
             @Override
@@ -113,8 +95,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                point = searchPoint();
-                return table[point].key;
+                return table[point++].key;
             }
         };
     }
