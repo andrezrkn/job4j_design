@@ -39,4 +39,25 @@ public class SimpleTreeTest {
         tree.add(5, 6);
         assertFalse(tree.add(2, 6));
     }
+
+    @Test
+    public void when3ChildrenThenFalse() {
+        SimpleTree<Integer> tree = new SimpleTree<>(1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(1, 4);
+        tree.add(4, 5);
+        tree.add(5, 6);
+        assertFalse(tree.isBinary());
+    }
+
+    @Test
+    public void when2ChildrenThenTrue() {
+        SimpleTree<Integer> tree = new SimpleTree<>(1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(4, 5);
+        tree.add(5, 6);
+        assertTrue(tree.isBinary());
+    }
 }
