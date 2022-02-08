@@ -14,8 +14,7 @@ public class SimpleTree<E> implements Tree<E> {
         Optional<Node<E>> searchRsl = findBy(parent);
         return searchRsl.isPresent()
                 && findBy(child).isEmpty()
-                && (!searchRsl.get().children.contains(child)
-                && searchRsl.get().children.add(new Node<E>(child)));
+                && searchRsl.get().children.add(new Node<E>(child));
     }
 
     @Override
