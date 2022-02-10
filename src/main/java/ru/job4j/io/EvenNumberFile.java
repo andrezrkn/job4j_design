@@ -11,7 +11,6 @@ public class EvenNumberFile {
                 text.append((char) read);
             }
             String[] lines = text.toString().split(System.lineSeparator());
-            int[] number = new int[lines.length];
             for (String line : lines) {
                 if (Integer.parseInt(line) % 2 == 0) {
                     System.out.println(line + " even");
