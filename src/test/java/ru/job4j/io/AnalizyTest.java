@@ -14,7 +14,6 @@ public class AnalizyTest {
         boolean result = true;
         List<String> rslList = List.of("10:57:01;10:59:01", "11:01:02;11:02:02");
         Analizy ob = new Analizy();
-        List<String> data = new ArrayList<>();
         try (PrintWriter out = new PrintWriter(new FileOutputStream("unavailable.csv"))) {
             out.println("200 10:56:01");
             out.println("500 10:57:01");
@@ -32,6 +31,7 @@ public class AnalizyTest {
                  line = in.readLine()) {
                 if (!rslList.contains(line)) {
                     result = false;
+                    break;
                 }
             }
         } catch (Exception e) {
@@ -46,7 +46,6 @@ public class AnalizyTest {
         boolean result = true;
         List<String> rslList = List.of("10:57:01;11:02:02");
         Analizy ob = new Analizy();
-        List<String> data = new ArrayList<>();
         try (PrintWriter out = new PrintWriter(new FileOutputStream("unavailable.csv"))) {
             out.println("200 10:56:01");
             out.println("500 10:57:01");
@@ -64,6 +63,7 @@ public class AnalizyTest {
                  line = in.readLine()) {
                 if (!rslList.contains(line)) {
                     result = false;
+                    break;
                 }
             }
         } catch (Exception e) {
