@@ -7,7 +7,7 @@ import static org.junit.Assert.assertThat;
 
 public class ConfigTest {
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void whenPairWithoutComment() {
         String path = "./data/pair_without_comment.properties";
         Config config = new Config(path);
@@ -29,6 +29,7 @@ public class ConfigTest {
         String path = "./data/data_without_key.properties";
         Config config = new Config(path);
         config.load();
+        config.value("123");
     }
 
     @Test
@@ -37,5 +38,13 @@ public class ConfigTest {
         Config config = new Config(path);
         config.load();
         assertThat(config.value("2+2?"), is("a skolko nado?"));
+    }
+
+    @Test
+    public void whenLineHasInValueEqual() {
+        String path = "./data/when_line_has_in_value_equal.properties";
+        Config config = new Config(path);
+        config.load();
+        assertThat(config.value("2+2?"), is("a=skolko=nado?"));
     }
 }

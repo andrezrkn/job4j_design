@@ -14,47 +14,55 @@ public class Config {
         this.path = path;
     }
 
+    private String[] validate(String element) {
+        String[] cell = new String[2];
+        cell[0] = "";
+        cell[1] = "";
+        char[] elementBuffer = element.toCharArray();
+        int elLength = elementBuffer.length;
+        if (elementBuffer[0] == '=' || elementBuffer[elLength - 1] == '=') {
+            cell[0] = null;
+        } else {
+            int equalIndex = 0, endValue = 0;
+            for (int i = 0; i < elLength; i++) {
+                if (elementBuffer[i] == '=') {
+                    equalIndex = i;
+                    break;
+                } else {
+                    cell[0] += elementBuffer[i];
+                }
+            }
+            int startValue = equalIndex + 1;
+            for (int i = equalIndex + 1; i < elLength; i++) {
+                if (elementBuffer[i] != ' ') {
+                    startValue = i;
+                    break;
+                }
+            }
+            for (int i = elLength - 1; i > equalIndex + 1; i--) {
+                if (elementBuffer[i] != ' ') {
+                    endValue = i;
+                    break;
+                }
+            }
+            for (int i = startValue; i < endValue + 1; i++) {
+                cell[1] += elementBuffer[i];
+            }
+        }
+        return cell;
+    }
+
     public void load() {
         List<String> mass = new ArrayList<>();
-        int equalIndex = 0;
-        String key, value;
-        char[] strBuff = null;
+        String[] value;
         try (BufferedReader read = new BufferedReader(new FileReader(this.path
         ))) {
             read.lines().filter(el -> el.contains("=")).forEach(mass::add);
-            for (String el : mass) {
-                strBuff = el.toCharArray();
-                int newLengthStrBuff = strBuff.length, spaceCount = 0;
-                for (int i = strBuff.length - 1; i > 0; i--) {
-                    if (strBuff[i] != ' ') {
-                        break;
-                    } else {
-                        newLengthStrBuff--;
-                    }
+            for (String element : mass) {
+                value = validate(element);
+                if (value[0] != null) {
+                    values.put(value[0], value[1]);
                 }
-                for (int i = 0; i < strBuff.length; i++) {
-                    if (strBuff[i] == ' ') {
-                        spaceCount++;
-                    } else {
-                        break;
-                    }
-                }
-                char[] trueStrBuff = new char[newLengthStrBuff - spaceCount];
-                if (spaceCount != 0 || strBuff.length != newLengthStrBuff) {
-                    for (int i = spaceCount; i < newLengthStrBuff; i++) {
-                        trueStrBuff[i - spaceCount] = strBuff[i];
-                    }
-                } else {
-                    trueStrBuff = strBuff;
-                }
-                String fin = new String(trueStrBuff);
-                equalIndex = fin.indexOf("=");
-                key = fin.substring(0, equalIndex);
-                if (key.isEmpty()) {
-                    throw new IllegalArgumentException("key is empty");
-                }
-                value = fin.substring(equalIndex + 1);
-                values.put(key, value);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -62,6 +70,10 @@ public class Config {
     }
 
     public String value(String key) {
+        String val = values.get(key);
+        if (val == null) {
+            throw new IllegalArgumentException("key doesn't exist");
+        }
         return values.get(key);
     }
 
