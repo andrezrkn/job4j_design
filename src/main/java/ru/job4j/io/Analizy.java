@@ -38,7 +38,7 @@ public class Analizy {
                     period = new StringBuilder();
                 }
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -52,7 +52,7 @@ public class Analizy {
             out.println("200 10:59:01");
             out.println("500 11:01:02");
             out.println("200 11:02:02");
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         ob.unavailable("unavailable.csv", "file.txt");
