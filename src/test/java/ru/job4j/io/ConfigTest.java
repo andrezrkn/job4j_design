@@ -47,4 +47,12 @@ public class ConfigTest {
         config.load();
         assertThat(config.value("2+2?"), is("a=skolko=nado?"));
     }
+
+    @Test
+    public void whenEqualAtTheEnd() {
+        String path = "./data/when_equal_at_the_end.properties";
+        Config config = new Config(path);
+        config.load();
+        assertThat(config.value("5+5"), is("10="));
+    }
 }

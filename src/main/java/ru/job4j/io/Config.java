@@ -20,10 +20,22 @@ public class Config {
         cell[1] = "";
         char[] elementBuffer = element.toCharArray();
         int elLength = elementBuffer.length;
-        if (elementBuffer[0] == '=' || elementBuffer[elLength - 1] == '=') {
+        boolean flag = true;
+        if (elementBuffer[0] == '=' || elementBuffer[0] == '#') {
             cell[0] = null;
-        } else {
-            int equalIndex = 0, endValue = 0;
+            flag = false;
+        } else if (elementBuffer[elLength - 1] == '=') {
+            for (int i = elLength - 2; i > 1; i--) {
+                if (elementBuffer[i] == '=') {
+                    flag = true;
+                    break;
+                }
+            }
+            cell[0] = null;
+        }
+        if (flag) {
+            cell[0] = "";
+            int endValue = 0, equalIndex = 0;
             for (int i = 0; i < elLength; i++) {
                 if (elementBuffer[i] == '=') {
                     equalIndex = i;
