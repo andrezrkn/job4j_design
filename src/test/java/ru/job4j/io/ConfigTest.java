@@ -55,4 +55,12 @@ public class ConfigTest {
         config.load();
         assertThat(config.value("5+5"), is("10="));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenKeyWithoutValue()  {
+        String path = "./data/when_key_without_value.properties";
+        Config config = new Config(path);
+        config.load();
+        assertThat(config.value("5+5"), is(""));
+    }
 }

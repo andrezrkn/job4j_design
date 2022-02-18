@@ -15,50 +15,19 @@ public class Config {
     }
 
     private String[] validate(String element) {
-        String[] cell = new String[2];
-        cell[0] = "";
-        cell[1] = "";
-        char[] elementBuffer = element.toCharArray();
-        int elLength = elementBuffer.length;
-        boolean flag = true;
-        if (elementBuffer[0] == '=' || elementBuffer[0] == '#') {
-            cell[0] = null;
-            flag = false;
-        } else if (elementBuffer[elLength - 1] == '=') {
-            for (int i = elLength - 2; i > 1; i--) {
-                if (elementBuffer[i] == '=') {
-                    flag = true;
-                    break;
-                }
-            }
-            cell[0] = null;
+        String[] cell = {"", ""};
+        if (element.contains("=")) {
+            cell = element.split("=", 2);
         }
-        if (flag) {
-            cell[0] = "";
-            int endValue = 0, equalIndex = 0;
-            for (int i = 0; i < elLength; i++) {
-                if (elementBuffer[i] == '=') {
-                    equalIndex = i;
-                    break;
-                } else {
-                    cell[0] += elementBuffer[i];
-                }
+        if (element.startsWith("=") || element.startsWith("#")
+                || cell[1].equals("")) {
+            cell[0] = null;
+        } else {
+            while (cell[1].startsWith(" ")) {
+                cell[1] = cell[1].substring(1);
             }
-            int startValue = equalIndex + 1;
-            for (int i = equalIndex + 1; i < elLength; i++) {
-                if (elementBuffer[i] != ' ') {
-                    startValue = i;
-                    break;
-                }
-            }
-            for (int i = elLength - 1; i > equalIndex + 1; i--) {
-                if (elementBuffer[i] != ' ') {
-                    endValue = i;
-                    break;
-                }
-            }
-            for (int i = startValue; i < endValue + 1; i++) {
-                cell[1] += elementBuffer[i];
+            while (cell[1].endsWith(" ")) {
+                cell[1] = cell[1].substring(0, cell[1].length() - 2);
             }
         }
         return cell;
@@ -105,7 +74,6 @@ public class Config {
         Config config = new Config("app.properties");
         System.out.println(config);
         config.load();
-
     }
 
 }
