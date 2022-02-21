@@ -23,12 +23,7 @@ public class Config {
                 || cell[1].equals("")) {
             cell[0] = null;
         } else {
-            while (cell[1].startsWith(" ")) {
-                cell[1] = cell[1].substring(1);
-            }
-            while (cell[1].endsWith(" ")) {
-                cell[1] = cell[1].substring(0, cell[1].length() - 2);
-            }
+            cell[1] = cell[1].trim();
         }
         return cell;
     }
