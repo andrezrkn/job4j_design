@@ -18,8 +18,7 @@ public class Dir {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                 File f = new File(file.toAbsolutePath().toString());
-                System.out.printf(file.getFileName() + " %d", f.length());
-                System.out.println("");
+                System.out.printf("%s %d %n", file.getFileName(), f.length());
                 return super.visitFile(file, attrs);
             }
         });
