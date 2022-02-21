@@ -18,7 +18,7 @@ public class Dir {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                 File f = new File(file.toAbsolutePath().toString());
-                if (f.exists()) {
+                if (!f.isDirectory()) {
                     System.out.printf(file.getFileName() + " %d", f.length());
                     System.out.println("");
                 }
