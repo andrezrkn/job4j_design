@@ -10,6 +10,12 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
 
 public class DuplicatesFinder {
+    private static void print(File file, Path path) {
+        System.out.printf("A copy of the file exists."
+                        + " It's location: %s%n%s",
+                file, path);
+    }
+
     public static void main(String[] args) throws IOException {
         HashMap<FileProperty, Path> fileAndPath = new HashMap<>();
         Files.walkFileTree(Path.of("./"), new SimpleFileVisitor<>() {
@@ -21,9 +27,7 @@ public class DuplicatesFinder {
                 FileProperty property = new FileProperty(f.length(), f.getName());
                 if (!fileAndPath.isEmpty()) {
                     if (fileAndPath.containsKey(property)) {
-                        System.out.printf("A copy of the file exists."
-                                + " It's location: %s%n%s",
-                                f, fileAndPath.get(property).toAbsolutePath());
+                        print(f, fileAndPath.get(property).toAbsolutePath());
                     } else {
                         fileAndPath.put(property, file.toAbsolutePath());
                     }
