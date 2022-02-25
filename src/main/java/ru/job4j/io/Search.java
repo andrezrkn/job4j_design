@@ -18,7 +18,7 @@ public class Search {
 
     private static boolean validate(String[] args) {
         if (args.length == 0) {
-            throw new IllegalArgumentException("Root folder is null. Usage java -jar dir.jar ROOT_FOLDER.");
+            throw new IllegalArgumentException("the program uses 2 arguments, enter them before running");
         }
         if (args.length != 2) {
             throw new IllegalArgumentException("the number of arguments is not equal to two");
