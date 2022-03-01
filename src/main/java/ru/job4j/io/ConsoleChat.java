@@ -73,13 +73,16 @@ public class ConsoleChat {
 
     private static void validate(String[] args) {
         if (args.length == 0) {
-            throw new IllegalArgumentException("the program uses 2 arguments, enter them before running");
+            throw new IllegalArgumentException("the program uses 2 arguments,"
+                    + " enter them before running. "
+                    + "Example: C:/q/1.txt C:/r/2.js");
         }
         if (args.length != 2) {
             throw new IllegalArgumentException("the number of arguments is not equal to two");
         }
         if (!args[0].contains(".") || !args[1].contains(".")) {
-            throw new IllegalArgumentException("enter the correct file names");
+            throw new IllegalArgumentException("enter the correct file names. "
+                    + "Example: C:/job4j/name.txt");
         }
         File file = new File(args[0]);
         if (!file.exists()) {
