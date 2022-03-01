@@ -21,7 +21,7 @@ public class ArgsName {
                 cell = el.split("=", 2);
                 cell[0] = cell[0].substring(1);
             }
-            if (el.startsWith("=") || cell[1].equals("")) {
+            if (el.startsWith("=") || "".equals(cell[1])) {
                 throw new IllegalArgumentException("key or value don't exist");
             } else {
                 cell[1] = cell[1].trim();
