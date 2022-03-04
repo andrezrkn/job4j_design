@@ -80,17 +80,12 @@ public class ConsoleChat {
         if (args.length != 2) {
             throw new IllegalArgumentException("the number of arguments is not equal to two");
         }
-        if (!args[0].contains(".") || !args[1].contains(".")) {
-            throw new IllegalArgumentException("enter the correct file names. "
-                    + "Example: C:/job4j/name.txt");
-        }
         File file = new File(args[0]);
         if (!file.exists()) {
             throw new IllegalArgumentException(String.format("Not exist %s", file.getAbsoluteFile()));
         }
-        file = new File(args[1]);
-        if (!file.isDirectory()) {
-            throw new IllegalArgumentException(String.format("Not directory %s", file.getAbsoluteFile()));
+        if (!file.isFile()) {
+            throw new IllegalArgumentException(String.format("Not file %s", file.getAbsoluteFile()));
         }
     }
 
