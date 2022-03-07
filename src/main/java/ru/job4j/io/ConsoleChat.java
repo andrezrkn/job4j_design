@@ -74,13 +74,15 @@ public class ConsoleChat {
     private static void validate(String[] args) {
         if (args.length == 0) {
             throw new IllegalArgumentException("the program uses 2 arguments,"
-                    + " enter them before running. "
-                    + "Example: C:/q/1.txt C:/r/2.js");
+                    + " the first argument is the path to save"
+                    + " the second argument is the file with answers"
+                    + " enter them before running."
+                    + " Example: C:/q/1.txt C:/r/2.js");
         }
         if (args.length != 2) {
             throw new IllegalArgumentException("the number of arguments is not equal to two");
         }
-        File file = new File(args[0]);
+        File file = new File(args[1]);
         if (!file.exists()) {
             throw new IllegalArgumentException(String.format("Not exist %s", file.getAbsoluteFile()));
         }
