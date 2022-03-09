@@ -2,25 +2,19 @@ package ru.job4j.io;
 
 import java.io.*;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class Zip {
 
-    public void packFiles(List<File> sources, File target) {
-        Zip zip = new Zip();
-        for (File el : sources) {
-            zip.packSingleFile(el, target);
-        }
-    }
-
-    public void packSingleFile(File source, File target) {
+    public void packFiles(List<Path> sources, File target) {
         try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
-            zip.putNextEntry(new ZipEntry(source.getPath()));
-            try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(source))) {
-                zip.write(out.readAllBytes());
+            for (Path el : sources) {
+                zip.putNextEntry(new ZipEntry(el.toString()));
+                try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(el.toString()))) {
+                    zip.write(out.readAllBytes());
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -51,20 +45,12 @@ public class Zip {
         ArgsName argsName = ArgsName.of(args);
         zip.validatePath(argsName.get("d"));
         List<Path> rsl = Search.search(new File(argsName.get("d")).toPath(),
-                p -> p.toFile().getName().endsWith(argsName.get("e")));
-        List<File> list = new ArrayList<>();
-        for (Path el : rsl) {
-            list.add(el.toFile());
-        }
-        zip.packFiles(list, new File(argsName.get("o")));
+                p -> !p.toFile().getName().endsWith(argsName.get("e")));
+        zip.packFiles(rsl, new File(argsName.get("o")));
     }
 
     public static void main(String[] args) throws IOException {
         Zip zip = new Zip();
-        zip.packSingleFile(
-                new File("./pom.xml"),
-                new File("./pom.zip")
-        );
         zip.logic(zip, args);
     }
 }
