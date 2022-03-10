@@ -41,8 +41,8 @@ public class Search {
         Files.walkFileTree(root, new SimpleFileVisitor<>() {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                if (condition.test(file.getFileName())) {
-                    rsl.add(file.getFileName());
+                if (condition.test(file)) {
+                    rsl.add(file);
                 }
                 return super.visitFile(file, attrs);
             }
