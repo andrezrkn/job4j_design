@@ -1,0 +1,9 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<car operativeCondition="true" weight = "2000" name = "volvo">
+    <engine name = "T4" ePower = "250" weight = "350"/>
+    <competitors>
+        <competitor>Ford</competitor>
+        <competitor>Volkswagen</competitor>
+        <competitor>Saab</competitor>
+    </competitors>
+</car>
