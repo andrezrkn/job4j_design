@@ -28,4 +28,24 @@ public class Car {
                 + ", competitors='" + Arrays.toString(competitors) + '\''
                 + '}';
     }
+
+    public boolean isOperativeCondition() {
+        return operativeCondition;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Engine getEngine() {
+        return engine;
+    }
+
+    public String[] getCompetitors() {
+        return competitors;
+    }
 }

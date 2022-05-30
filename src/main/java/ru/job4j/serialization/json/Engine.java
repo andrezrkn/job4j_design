@@ -19,4 +19,16 @@ public class Engine {
                 + ", weight=" + weight
                 + '}';
     }
+
+    public int getePower() {
+        return ePower;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
