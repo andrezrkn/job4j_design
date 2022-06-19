@@ -25,11 +25,13 @@ insert into devices_people(device_id, people_id) values (2, 4), (3, 4), (4, 4);
 
 select avg(price) from devices;
 
-select dpp.people_id as i, avg(d.price)
+select people1.name as n, avg(d.price)
 from devices_people as dpp
 join devices d
 on dpp.device_id = d.id
-group by i;
+join people1 as p
+on p.id = dpp.people_id
+group by n;
 
 select dpp.people_id as pname, avg(d.price)
 from devices_people as dpp
