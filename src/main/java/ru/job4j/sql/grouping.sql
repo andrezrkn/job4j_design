@@ -33,9 +33,11 @@ join people1 as p
 on p.id = dpp.people_id
 group by n;
 
-select dpp.people_id as pname, avg(d.price)
+select p.name as n, avg(d.price)
 from devices_people as dpp
 join devices d
 on dpp.device_id = d.id
-group by pname
+join people1 as p
+on p.id = dpp.people_id
+group by n
 having avg(d.price) > 5000;
