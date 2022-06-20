@@ -12,10 +12,10 @@ create table people1(
 create table devices_people(
     id serial primary key,
     device_id int references devices(id),
-    people_id int references people(id)
+    people_id int references people1(id)
 );
 
-insert into people(name) values ('Андрей'), ('Георгий'), ('Дмитрий'), ('Александр');
+insert into people1(name) values ('Андрей'), ('Георгий'), ('Дмитрий'), ('Александр');
 insert into devices(name, price) values ('computer', 50000), ('smartphone', 10000), ('earpods', 1000),
  ('charger', 2000), ('watch', 5000);
 insert into devices_people(device_id, people_id) values (1, 1), (2, 1), (4, 1);
