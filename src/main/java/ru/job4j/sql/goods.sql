@@ -8,7 +8,7 @@ CREATE TABLE product1(
 	name text,
 	expired_date date,
 	price int,
-	type_id int references type(id)
+	type_id int references type1(id)
 );
 
 insert into type1(name) values ('сыр'), ('молоко'), ('шоколад'), ('крупа'), ('напитки');
