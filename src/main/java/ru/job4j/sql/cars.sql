@@ -40,16 +40,12 @@ insert into car(body_id, engine_id, transmission_id) values
 
 select c.id, b.name as kuzov, e.name as motor, t.name as korobka
 from car c
-full join body b
+left join body b
 on c.body_id = b.id
-full join engine e
+left join engine e
 on c.engine_id = e.id
-full join transmission t
+left join transmission t
 on c.transmission_id = t.id
-where
-(c.body_id = b.id and c.engine_id = e.id and (c.transmission_id is null)) or
-(c.body_id = b.id and c.engine_id is null and c.transmission_id = t.id) or
-(c.body_id = b.id and c.engine_id = e.id and c.transmission_id = t.id);
 
 select b.name
 from car c
