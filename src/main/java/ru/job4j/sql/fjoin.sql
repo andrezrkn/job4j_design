@@ -57,11 +57,11 @@ select d.name, e.name
 from employees e
 cross join departments d;
 
-select d.name, e.name
+select d.name
 from departments d
 left join employees e
 on d.id = e.departments_id
-where e.name is null;
+where e.departments_id is null;
 
 insert into teens(name, gender) values
 ('Andre', 'M'), ('Alexander', 'M'), ('Tom', 'M'),
@@ -70,5 +70,4 @@ insert into teens(name, gender) values
 select m.name, f.name
 from teens m
 cross join teens as f
-where m.gender != f.gender
-limit 9;
+where m.gender = 'm' and f.gender = 'f'
