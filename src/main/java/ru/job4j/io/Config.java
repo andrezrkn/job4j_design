@@ -8,10 +8,15 @@ import java.util.*;
 public class Config {
 
     private final String path;
+
     private final Map<String, String> values = new HashMap<>();
 
     public Config(final String path) {
         this.path = path;
+    }
+
+    public Map<String, String> getValues() {
+        return values;
     }
 
     private String[] validate(String element) {
