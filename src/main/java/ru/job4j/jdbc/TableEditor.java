@@ -42,7 +42,7 @@ public class TableEditor implements AutoCloseable {
         execute(sql);
     }
 
-    public void addColumn(String tableName, String columnName, String type) throws Exception{
+    public void addColumn(String tableName, String columnName, String type) throws Exception {
         String sql = String.format(
                 "ALTER TABLE %s ADD COLUMN %s %s",
                 tableName, columnName, type
@@ -50,7 +50,7 @@ public class TableEditor implements AutoCloseable {
         execute(sql);
     }
 
-    public void dropColumn(String tableName, String columnName) throws Exception{
+    public void dropColumn(String tableName, String columnName) throws Exception {
         String sql = String.format(
                 "ALTER TABLE %s DROP COLUMN %s",
                 tableName, columnName
@@ -58,7 +58,7 @@ public class TableEditor implements AutoCloseable {
         execute(sql);
     }
 
-    public void renameColumn(String tableName, String columnName, String newColumnName) throws Exception{
+    public void renameColumn(String tableName, String columnName, String newColumnName) throws Exception {
         String sql = String.format(
                 "ALTER TABLE %s RENAME COLUMN %s TO  %s",
                 tableName, columnName, newColumnName
@@ -98,25 +98,25 @@ public class TableEditor implements AutoCloseable {
         try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("app.properties")) {
             config.load(in);
         }
-        var TE = new TableEditor(config);
-        TE.connection = DriverManager.getConnection(
+        var te = new TableEditor(config);
+        te.connection = DriverManager.getConnection(
                 config.getProperty("url"),
                 config.getProperty("login"),
                 config.getProperty("password")
         );
-        TE.createTable("Car");
-        System.out.println(getTableScheme(TE.connection, "Car"));
+        te.createTable("Car");
+        System.out.println(getTableScheme(te.connection, "Car"));
 
-        TE.addColumn("Car", "Engine", "text");
-        System.out.println(getTableScheme(TE.connection, "Car"));
+        te.addColumn("Car", "Engine", "text");
+        System.out.println(getTableScheme(te.connection, "Car"));
 
-        TE.renameColumn("Car", "Engine", "Body");
-        System.out.println(getTableScheme(TE.connection, "Car"));
+        te.renameColumn("Car", "Engine", "Body");
+        System.out.println(getTableScheme(te.connection, "Car"));
 
-        TE.dropColumn("Car", "Body");
-        System.out.println(getTableScheme(TE.connection, "Car"));
+        te.dropColumn("Car", "Body");
+        System.out.println(getTableScheme(te.connection, "Car"));
 
-        TE.dropTable("Car");
-        TE.close();
+        te.dropTable("Car");
+        te.close();
     }
 }
