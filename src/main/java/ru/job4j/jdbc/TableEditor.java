@@ -102,23 +102,22 @@ public class TableEditor implements AutoCloseable {
 
     public static void main(String[] args) throws Exception {
         Properties config = new Properties();
-        var te = new TableEditor(config);
-        te.initConnection();
-        te.createTable("Car");
-        System.out.println(getTableScheme(te.connection, "Car"));
+        try (var te = new TableEditor(config)) {
+            te.initConnection();
+            te.createTable("Car");
+            System.out.println(getTableScheme(te.connection, "Car"));
 
-        te.addColumn("Car", "Engine", "text");
-        System.out.println(getTableScheme(te.connection, "Car"));
+            te.addColumn("Car", "Engine", "text");
+            System.out.println(getTableScheme(te.connection, "Car"));
 
-        te.renameColumn("Car", "Engine", "Body");
-        System.out.println(getTableScheme(te.connection, "Car"));
+            te.renameColumn("Car", "Engine", "Body");
+            System.out.println(getTableScheme(te.connection, "Car"));
 
-        te.dropColumn("Car", "Body");
-        System.out.println(getTableScheme(te.connection, "Car"));
+            te.dropColumn("Car", "Body");
+            System.out.println(getTableScheme(te.connection, "Car"));
 
-        te.dropTable("Car");
-        System.out.println(getTableScheme(te.connection, "Car"));
-
-        te.close();
+            te.dropTable("Car");
+            System.out.println(getTableScheme(te.connection, "Car"));
+        }
     }
 }
