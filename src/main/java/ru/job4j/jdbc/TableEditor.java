@@ -11,13 +11,20 @@ public class TableEditor implements AutoCloseable {
 
     private Properties properties;
 
-    public TableEditor(Properties properties) {
+    public TableEditor(Properties properties) throws Exception {
         this.properties = properties;
         initConnection();
     }
 
-    private void initConnection() {
-        connection = null;
+    private void initConnection() throws Exception {
+        try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("app.properties")) {
+            properties.load(in);
+            connection = DriverManager.getConnection(
+                    properties.getProperty("url"),
+                    properties.getProperty("login"),
+                    properties.getProperty("password")
+            );
+        }
     }
 
     private void execute(String sql) throws Exception {
@@ -95,15 +102,8 @@ public class TableEditor implements AutoCloseable {
 
     public static void main(String[] args) throws Exception {
         Properties config = new Properties();
-        try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("app.properties")) {
-            config.load(in);
-        }
         var te = new TableEditor(config);
-        te.connection = DriverManager.getConnection(
-                config.getProperty("url"),
-                config.getProperty("login"),
-                config.getProperty("password")
-        );
+        te.initConnection();
         te.createTable("Car");
         System.out.println(getTableScheme(te.connection, "Car"));
 
@@ -117,6 +117,8 @@ public class TableEditor implements AutoCloseable {
         System.out.println(getTableScheme(te.connection, "Car"));
 
         te.dropTable("Car");
+        System.out.println(getTableScheme(te.connection, "Car"));
+
         te.close();
     }
 }
