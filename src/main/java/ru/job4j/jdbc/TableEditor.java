@@ -16,20 +16,15 @@ public class TableEditor implements AutoCloseable {
         initConnection();
     }
 
-    private void initConnection() throws Exception {
-        try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("app.properties")) {
-            properties.load(in);
-            connection = DriverManager.getConnection(
-                    properties.getProperty("url"),
-                    properties.getProperty("login"),
-                    properties.getProperty("password")
-            );
-        }
-    }
-
     private void execute(String sql) throws Exception {
         try (Statement statement = connection.createStatement()) {
             statement.execute(sql);
+        }
+    }
+
+    private void initConnection() throws Exception {
+        try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("app.properties")) {
+            properties.load(in);
         }
     }
 
@@ -93,6 +88,9 @@ public class TableEditor implements AutoCloseable {
         return buffer.toString();
     }
 
+    public void sysOut(String name) throws Exception {
+        System.out.println(getTableScheme(connection, name));
+    }
     @Override
     public void close() throws Exception {
         if (connection != null) {
@@ -104,20 +102,25 @@ public class TableEditor implements AutoCloseable {
         Properties config = new Properties();
         try (var te = new TableEditor(config)) {
             te.initConnection();
+            te.connection = DriverManager.getConnection(
+                    te.properties.getProperty("url"),
+                    te.properties.getProperty("login"),
+                    te.properties.getProperty("password")
+            );
             te.createTable("Car");
-            System.out.println(getTableScheme(te.connection, "Car"));
+            te.sysOut("Car");
 
             te.addColumn("Car", "Engine", "text");
-            System.out.println(getTableScheme(te.connection, "Car"));
+            te.sysOut("Car");
 
             te.renameColumn("Car", "Engine", "Body");
-            System.out.println(getTableScheme(te.connection, "Car"));
+            te.sysOut("Car");
 
             te.dropColumn("Car", "Body");
-            System.out.println(getTableScheme(te.connection, "Car"));
+            te.sysOut("Car");
 
             te.dropTable("Car");
-            System.out.println(getTableScheme(te.connection, "Car"));
+            te.sysOut("Car");
         }
     }
 }
