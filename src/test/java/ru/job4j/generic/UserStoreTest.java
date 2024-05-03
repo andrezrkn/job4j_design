@@ -1,10 +1,7 @@
 package ru.job4j.generic;
 
-import org.junit.Test;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UserStoreTest {
 
@@ -13,7 +10,7 @@ public class UserStoreTest {
         UserStore store = new UserStore();
         store.add(new User("1", "Petr"));
         User result = store.findById("1");
-        assertThat(result.getUsername(), is("Petr"));
+        assertEquals(result.getUsername(), "Petr");
     }
 
     @Test
@@ -30,7 +27,7 @@ public class UserStoreTest {
         store.add(new User("1", "Petr"));
         store.add(new User("1", "Maxim"));
         User result = store.findById("1");
-        assertThat(result.getUsername(), is("Petr"));
+        assertEquals(result.getUsername(), "Petr");
     }
 
     @Test
@@ -39,7 +36,7 @@ public class UserStoreTest {
         store.add(new User("1", "Petr"));
         store.replace("1", new User("1", "Maxim"));
         User result = store.findById("1");
-        assertThat(result.getUsername(), is("Maxim"));
+        assertEquals(result.getUsername(), "Maxim");
     }
 
     @Test
@@ -48,7 +45,7 @@ public class UserStoreTest {
         store.add(new User("1", "Petr"));
         store.replace("10", new User("10", "Maxim"));
         User result = store.findById("1");
-        assertThat(result.getUsername(), is("Petr"));
+        assertEquals(result.getUsername(), "Petr");
     }
 
     @Test
@@ -66,6 +63,6 @@ public class UserStoreTest {
         store.add(new User("1", "Petr"));
         store.delete("10");
         User result = store.findById("1");
-        assertThat(result.getUsername(), is("Petr"));
+        assertEquals(result.getUsername(), "Petr");
     }
 }

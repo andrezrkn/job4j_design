@@ -1,19 +1,20 @@
 package ru.job4j.io;
 
-import org.hamcrest.Matchers;
-import org.junit.Test;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 
 public class ConfigTest {
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenPairWithoutComment() {
         String path = "./data/pair_without_comment.properties";
         Config config = new Config(path);
         config.load();
-        assertThat(config.value("name"), is("Petr Arsentev"));
-        assertThat(config.value("surname"), is(Matchers.nullValue()));
+        assertEquals(config.value("name"), "Petr Arsentev");
+        assertThatThrownBy(() -> config.value("surname"))
+                .isInstanceOf(IllegalArgumentException.class);
+
     }
 
     @Test
@@ -21,15 +22,16 @@ public class ConfigTest {
         String path = "./data/data_with_space_and_comment.properties";
         Config config = new Config(path);
         config.load();
-        assertThat(config.value("2+2?"), is("a skolko nado?"));
+        assertEquals(config.value("2+2?"), "a skolko nado?");
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenDataWithoutKey() {
         String path = "./data/data_without_key.properties";
         Config config = new Config(path);
         config.load();
-        config.value("123");
+        assertThatThrownBy(() -> config.value("123"))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -37,7 +39,7 @@ public class ConfigTest {
         String path = "./data/line_has_space.properties";
         Config config = new Config(path);
         config.load();
-        assertThat(config.value("2+2?"), is("a skolko nado?"));
+        assertEquals(config.value("2+2?"), "a skolko nado?");
     }
 
     @Test
@@ -45,7 +47,7 @@ public class ConfigTest {
         String path = "./data/when_line_has_in_value_equal.properties";
         Config config = new Config(path);
         config.load();
-        assertThat(config.value("2+2?"), is("a=skolko=nado?"));
+        assertEquals(config.value("2+2?"), "a=skolko=nado?");
     }
 
     @Test
@@ -53,14 +55,15 @@ public class ConfigTest {
         String path = "./data/when_equal_at_the_end.properties";
         Config config = new Config(path);
         config.load();
-        assertThat(config.value("5+5"), is("10="));
+        assertEquals(config.value("5+5"), "10=");
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenKeyWithoutValue()  {
         String path = "./data/when_key_without_value.properties";
         Config config = new Config(path);
         config.load();
-        assertThat(config.value("5+5"), is(""));
+        assertThatThrownBy(() -> config.value("5+5"))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

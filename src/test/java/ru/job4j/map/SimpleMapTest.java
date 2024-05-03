@@ -1,11 +1,10 @@
 package ru.job4j.map;
 
-import static org.junit.Assert.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import static org.hamcrest.Matchers.is;
 
 public class SimpleMapTest {
     @Test
@@ -44,8 +43,8 @@ public class SimpleMapTest {
         assertTrue(map.put(1, 1));
         assertTrue(map.put(2, 2));
         assertTrue(map.put(3, 3));
-        assertThat(map.get(1), is(1));
-        assertThat(map.get(3), is(3));
+        assertEquals(map.get(1), 1);
+        assertEquals(map.get(3), 3);
     }
 
     @Test
@@ -63,12 +62,13 @@ public class SimpleMapTest {
         assertTrue(map.iterator().hasNext());
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void whenPutAndRemoveExpectException() {
         SimpleMap<Integer, Integer> map = new SimpleMap<>();
         map.put(1, 1);
         map.remove(1);
-        map.iterator().next();
+        assertThatThrownBy(() -> map.iterator().next())
+                .isInstanceOf(NoSuchElementException.class);
     }
 
     @Test
@@ -77,6 +77,6 @@ public class SimpleMapTest {
         map.put(1, 1);
         map.put(2, 2);
         Iterator<Integer> iterator = map.iterator();
-        assertThat(iterator.next(), is(1));
+        assertEquals(iterator.next(), 1);
     }
 }

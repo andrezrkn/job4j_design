@@ -1,11 +1,11 @@
 package ru.job4j.it;
 
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.Matchers.is;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 
 public class FlatMapTest {
     @Test
@@ -15,9 +15,9 @@ public class FlatMapTest {
                 List.of(2, 3).iterator()
         ).iterator();
         FlatMap<Integer> flat = new FlatMap<>(data);
-        assertThat(flat.next(), is(1));
-        assertThat(flat.next(), is(2));
-        assertThat(flat.next(), is(3));
+        assertEquals(flat.next(), 1);
+        assertEquals(flat.next(), 2);
+        assertEquals(flat.next(), 3);
     }
 
     @Test
@@ -26,9 +26,9 @@ public class FlatMapTest {
                 List.of(1, 2, 3).iterator()
         ).iterator();
         FlatMap<Integer> flat = new FlatMap<>(data);
-        assertThat(flat.next(), is(1));
-        assertThat(flat.next(), is(2));
-        assertThat(flat.next(), is(3));
+        assertEquals(flat.next(), 1);
+        assertEquals(flat.next(), 2);
+        assertEquals(flat.next(), 3);
     }
 
     @Test
@@ -37,8 +37,9 @@ public class FlatMapTest {
                 List.of(1).iterator()
         ).iterator();
         FlatMap<Integer> flat = new FlatMap<>(data);
-        assertThat(flat.hasNext(), is(true));
-        assertThat(flat.hasNext(), is(true));
+        assertTrue(flat.hasNext());
+        assertTrue(flat.hasNext());
+
     }
 
     @Test
@@ -47,16 +48,17 @@ public class FlatMapTest {
                 List.of(1).iterator()
         ).iterator();
         FlatMap<Integer> flat = new FlatMap<>(data);
-        assertThat(flat.next(), is(1));
-        assertThat(flat.hasNext(), is(false));
+        assertEquals(flat.next(), 1);
+        assertFalse(flat.hasNext());
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void whenEmpty() {
         Iterator<Iterator<Object>> data = List.of(
                 List.of().iterator()
         ).iterator();
         FlatMap<Object> flat = new FlatMap<>(data);
-        flat.next();
+        assertThatThrownBy(flat::next)
+                .isInstanceOf(NoSuchElementException.class);
     }
 }
