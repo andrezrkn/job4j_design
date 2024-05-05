@@ -41,6 +41,7 @@ public class SimpleQueueTest {
         assertThatThrownBy(queue::poll)
                 .isInstanceOf(NoSuchElementException.class);
     }
+
     @Test
     public void whenPushPushPollAndPush() {
         SimpleQueue<Integer> queue = new SimpleQueue<>();

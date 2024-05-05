@@ -38,7 +38,6 @@ public class AnalizyTest {
         assertTrue(result);
     }
 
-
     @Test
     public void secondTestJob4j() {
         boolean result = true;

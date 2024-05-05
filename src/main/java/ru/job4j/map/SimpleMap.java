@@ -100,8 +100,6 @@ public class SimpleMap<K, V> implements Map<K, V> {
         };
     }
 
-
-
     private static class MapEntry<K, V> {
 
         K key;
